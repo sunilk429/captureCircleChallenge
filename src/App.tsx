@@ -1,4 +1,9 @@
-import { useEffect, useState } from "react";
+import {
+  MouseEventHandler,
+  TouchEventHandler,
+  useEffect,
+  useState,
+} from "react";
 import "./App.css";
 import Button from "./components/Button";
 import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from "lucide-react";
@@ -24,7 +29,7 @@ function App() {
   const [intervalId, setIntervalId] = useState<IntervalId | null>(null);
 
   console.log(`circlePosition: ${circlePosition.x}:${circlePosition.y}`);
-  const handleKeyUp = (e) => {
+  const handleKeyUp = (e: KeyboardEvent) => {
     e.preventDefault();
     setArrowPressed(null);
     if (intervalId) {
@@ -32,6 +37,25 @@ function App() {
       setIntervalId(null);
     }
   };
+
+  const handleMouseUp: MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.preventDefault();
+    setArrowPressed(null);
+    if (intervalId) {
+      clearInterval(intervalId);
+      setIntervalId(null);
+    }
+  };
+
+  const handleTouchEnd: TouchEventHandler<HTMLButtonElement> = (e) => {
+    e.preventDefault();
+    setArrowPressed(null);
+    if (intervalId) {
+      clearInterval(intervalId);
+      setIntervalId(null);
+    }
+  };
+
   const handleKeyDown = (event: KeyboardEvent | direction) => {
     let key: direction;
     if (typeof event === "string") {
@@ -184,9 +208,9 @@ function App() {
           <Button
             isActive={arrowPressed === "ArrowUp"}
             onMouseDown={() => handleKeyDown("ArrowUp")}
-            onMouseUp={handleKeyUp}
+            onMouseUp={handleMouseUp}
             onTouchStart={() => handleKeyDown("ArrowUp")}
-            onTouchEnd={handleKeyUp}
+            onTouchEnd={handleTouchEnd}
           >
             <ArrowUp size={20} />
           </Button>
@@ -195,27 +219,27 @@ function App() {
           <Button
             isActive={arrowPressed === "ArrowLeft"}
             onMouseDown={() => handleKeyDown("ArrowLeft")}
-            onMouseUp={handleKeyUp}
+            onMouseUp={handleMouseUp}
             onTouchStart={() => handleKeyDown("ArrowLeft")}
-            onTouchEnd={handleKeyUp}
+            onTouchEnd={handleTouchEnd}
           >
             <ArrowLeft size={20} />
           </Button>
           <Button
             isActive={arrowPressed === "ArrowDown"}
             onMouseDown={() => handleKeyDown("ArrowDown")}
-            onMouseUp={handleKeyUp}
+            onMouseUp={handleMouseUp}
             onTouchStart={() => handleKeyDown("ArrowDown")}
-            onTouchEnd={handleKeyUp}
+            onTouchEnd={handleTouchEnd}
           >
             <ArrowDown size={20} />
           </Button>
           <Button
             isActive={arrowPressed === "ArrowRight"}
             onMouseDown={() => handleKeyDown("ArrowRight")}
-            onMouseUp={handleKeyUp}
+            onMouseUp={handleMouseUp}
             onTouchStart={() => handleKeyDown("ArrowRight")}
-            onTouchEnd={handleKeyUp}
+            onTouchEnd={handleTouchEnd}
           >
             <ArrowRight size={20} />
           </Button>
