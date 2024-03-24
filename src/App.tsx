@@ -24,7 +24,7 @@ function App() {
   const [intervalId, setIntervalId] = useState<IntervalId | null>(null);
 
   console.log(`circlePosition: ${circlePosition.x}:${circlePosition.y}`);
-  const handleKeyUp = (e: MouseEvent<HTMLButtonElement> | KeyboardEvent) => {
+  const handleKeyUp = (e) => {
     e.preventDefault();
     setArrowPressed(null);
     if (intervalId) {
